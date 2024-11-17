@@ -1,4 +1,3 @@
-import { calculateNewValue } from '@testing-library/user-event/dist/utils';
 import { useState } from 'react';
 import './App.css';
 
@@ -21,6 +20,7 @@ function Board({ xIsNext, squares, onPlay }) {
     } else {
       nextSquares[i] = 'O';
     }
+    
     onPlay(nextSquares);
   }
 
@@ -29,7 +29,7 @@ function Board({ xIsNext, squares, onPlay }) {
   if (winner) {
     status = 'Winner: ' + winner;
   } else {
-    status = 'Next player: ' + (xIsNext ? '' : '');
+    status = 'Next player: ' + (xIsNext ? 'X' : 'O');
   }
 
   return (
@@ -57,7 +57,7 @@ function Board({ xIsNext, squares, onPlay }) {
 export default function Game() {
   const [history, setHistory] = useState([Array(9).fill(null)]);
   const [currentMove, setCurrentMove] = useState(0);
-  const xIsNext = currentMove % 2 === 2;
+  const xIsNext = currentMove % 2 === 0;
   const currentSquares = history[currentMove];
 
   function handlePlay(nextSquares) {
@@ -77,6 +77,7 @@ export default function Game() {
     } else {
       description = 'Go to game start';
     }
+
     return (
       <li key={move}>
         <button onClick={() => jumpTo(move)}>{description}</button>
